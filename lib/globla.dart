@@ -16,7 +16,7 @@ class WhatsApp {
   final fakeJson = [
     {
       "name": "Juan Pérez",
-      "avatar": "https://i.pravatar.cc/150?img=1",
+      "avatar": "assets/images/Juan.jpg",
       "msg": "¿Cómo estás?",
       "date": "10:20 AM",
       "count": "1",
@@ -26,7 +26,7 @@ class WhatsApp {
     },
     {
       "name": "María López",
-      "avatar": "https://i.pravatar.cc/150?img=2",
+      "avatar": "assets/images/MariaP.jpg",
       "msg": "Te mandé el archivo",
       "date": "Ayer",
       "count": "3",
@@ -36,17 +36,17 @@ class WhatsApp {
     },
     {
       "name": "Carlos García",
-      "avatar": "https://i.pravatar.cc/150?img=3",
+      "avatar": "assets/images/CarlosG.jpg",
       "msg": "¡Listo el proyecto!",
       "date": "Lun",
-      "count": "0",
+      "count": "10",
       "story": false,
       "opened": true,
       "type": "incoming"
     },
     {
       "name": "Ana Torres",
-      "avatar": "https://i.pravatar.cc/150?img=4",
+      "avatar": "assets/images/AnaT.jpg",
       "msg": "Hablamos luego",
       "date": "12:45 PM",
       "count": "5",
@@ -56,7 +56,7 @@ class WhatsApp {
     },
     {
       "name": "Roberto Cruz",
-      "avatar": "https://i.pravatar.cc/150?img=5",
+      "avatar": "assets/images/RobertoT.jpg",
       "msg": "¿Vienes hoy?",
       "date": "Mar",
       "count": "2",
@@ -75,9 +75,9 @@ class WhatsApp {
 
   final fakeJson = [
     {
-      "first_name": "Carlos",
-      "last_name": "Mendoza",
-      "msg": "Nos vemos mañana",
+      "first_name": "Otilia",
+      "last_name": "Carter",
+      "msg": "sint nemo ut",
       "date": "Hoy",
       "count": 0,
       "story": true,
@@ -87,20 +87,20 @@ class WhatsApp {
       "stories": ["img1", "img2"]
     },
     {
-      "first_name": "Laura",
-      "last_name": "Cortés",
-      "msg": "Voy en camino",
+      "first_name": "Laury",
+      "last_name": "Walsh",
+      "msg": "vel vel ea",
       "date": "Ayer",
       "count": 1,
-      "story": false,
+      "story": true,
       "image": "https://picsum.photos/300/201",
       "avatar": "https://i.pravatar.cc/150?img=12",
       "status": "Ocupada",
       "stories": ["img1"]
     },
     {
-      "first_name": "Miguel",
-      "last_name": "Ángel",
+      "first_name": "Jedidiah",
+      "last_name": "Denesik",
       "msg": "Gracias!",
       "date": "Dom",
       "count": 2,
@@ -111,14 +111,86 @@ class WhatsApp {
       "stories": ["img1", "img2", "img3"]
     },
     {
+      "first_name": "Sheridan",
+      "last_name": "Wehner",
+      "msg": "Listo todo",
+      "date": "8:15 AM",
+      "count": 0,
+      "story": true,
+      "image": "https://picsum.photos/300/203",
+      "avatar": "https://i.pravatar.cc/150?img=14",
+      "status": "Conectada",
+      "stories": []
+    },
+    {
+      "first_name": "Marilie",
+      "last_name": "Reinger",
+      "msg": "sint nemo ut",
+      "date": "Lun",
+      "count": 4,
+      "story": false,
+      "image": "https://picsum.photos/300/204",
+      "avatar": "https://i.pravatar.cc/150?img=15",
+      "status": "Ausente",
+      "stories": []
+    },
+    {
+      "first_name": "Allene",
+      "last_name": "Deckow",
+      "msg": "vel vel ea",
+      "date": "Mar",
+      "count": 0,
+      "story": false,
+      "image": "https://picsum.photos/300/205",
+      "avatar": "https://i.pravatar.cc/150?img=16",
+      "status": "Disponible",
+      "stories": []
+    },
+    {
+      "first_name": "Carlos",
+      "last_name": "Mendoza",
+      "msg": "Nos vemos mañana",
+      "date": "Hoy",
+      "count": 0,
+      "story": false,
+      "image": "https://picsum.photos/300/206",
+      "avatar": "https://i.pravatar.cc/150?img=17",
+      "status": "Disponible",
+      "stories": []
+    },
+    {
+      "first_name": "Laura",
+      "last_name": "Cortés",
+      "msg": "Voy en camino",
+      "date": "Ayer",
+      "count": 1,
+      "story": false,
+      "image": "https://picsum.photos/300/207",
+      "avatar": "https://i.pravatar.cc/150?img=18",
+      "status": "Ocupada",
+      "stories": []
+    },
+    {
+      "first_name": "Miguel",
+      "last_name": "Ángel",
+      "msg": "Gracias!",
+      "date": "Dom",
+      "count": 2,
+      "story": false,
+      "image": "https://picsum.photos/300/208",
+      "avatar": "https://i.pravatar.cc/150?img=19",
+      "status": "En el trabajo",
+      "stories": []
+    },
+    {
       "first_name": "Sofía",
       "last_name": "Ramírez",
       "msg": "Listo todo",
       "date": "8:15 AM",
       "count": 0,
       "story": false,
-      "image": "https://picsum.photos/300/203",
-      "avatar": "https://i.pravatar.cc/150?img=14",
+      "image": "https://picsum.photos/300/209",
+      "avatar": "https://i.pravatar.cc/150?img=20",
       "status": "Conectada",
       "stories": []
     },
@@ -128,11 +200,11 @@ class WhatsApp {
       "msg": "Te marco luego",
       "date": "Lun",
       "count": 4,
-      "story": true,
-      "image": "https://picsum.photos/300/204",
-      "avatar": "https://i.pravatar.cc/150?img=15",
+      "story": false,
+      "image": "https://picsum.photos/300/210",
+      "avatar": "https://i.pravatar.cc/150?img=21",
       "status": "Ausente",
-      "stories": ["img1"]
+      "stories": []
     },
   ];
 
@@ -148,31 +220,31 @@ class WhatsApp {
       "name": "Juan Pérez",
       "time": "10:20 AM",
       "callType": "incoming",
-      "profilePic": "https://i.pravatar.cc/150?img=21"
+      "profilePic": "assets/images/JuanP.jpg"
     },
     {
       "name": "María López",
       "time": "Ayer",
       "callType": "missed",
-      "profilePic": "https://i.pravatar.cc/150?img=22"
+      "profilePic": "assets/images/MariaPM.jpg"
     },
     {
       "name": "Carlos García",
       "time": "Lun",
       "callType": "outgoing",
-      "profilePic": "https://i.pravatar.cc/150?img=23"
+      "profilePic": "assets/images/CarlosGM.jpg"
     },
     {
       "name": "Ana Torres",
       "time": "Hoy 8:00 AM",
       "callType": "incoming",
-      "profilePic": "https://i.pravatar.cc/150?img=24"
+      "profilePic": "assets/images/AnaTM.jpg"
     },
     {
       "name": "Roberto Cruz",
       "time": "Mar",
       "callType": "missed",
-      "profilePic": "https://i.pravatar.cc/150?img=25"
+      "profilePic": "RobertoTM.jpg"
     },
   ];
 
@@ -228,7 +300,7 @@ static Future<List<CallsModel>> Calls() async {
   final fakeJson = {
     "first_name": "Alejandro",
     "last_name": "Núñez",
-    "avatar": "https://i.pravatar.cc/150?img=30",
+    "avatar": "assets/images/me.jpg",
     "city": "Ciudad de México",
     "relationship": "Soltero",
     "gender": "Masculino",

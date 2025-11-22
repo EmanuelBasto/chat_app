@@ -1,8 +1,7 @@
 import 'package:chat_app/Models/calls.dart';
 import 'package:chat_app/globla.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' hide SearchBar;
-import 'package:chat_app/Components/search_bar.dart';
+import 'package:flutter/material.dart';
 class CallsScreen extends StatelessWidget {
   const CallsScreen({Key? key}) : super(key: key);
 
@@ -28,7 +27,15 @@ class CallsScreen extends StatelessWidget {
               const CupertinoSliverNavigationBar(
                 largeTitle: Text("Calls"),
               ),
-              SearchBar(onChanged: () {}, onSubmitted: () {}),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child: CupertinoSearchTextField(
+                    onChanged: (value) {},
+                    onSubmitted: (value) {},
+                  ),
+                ),
+              ),
               SliverList(
                 delegate: SliverChildListDelegate(
                   calls.map(

@@ -81,9 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ]),
         tabBuilder: (BuildContext context, int index){ 
-          return Center(
-            child: screens[index],
-          );
+          return screens[index];
          },
       ));
   }

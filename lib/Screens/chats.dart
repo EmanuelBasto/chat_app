@@ -7,6 +7,42 @@ import 'package:chat_app/Components/my_list_tile.dart';
 class ChatsScreen extends StatelessWidget {
   const ChatsScreen({Key? key}) : super(key: key);
 
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: const Text('Title'),
+        message: const Text('Message'),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Action One',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Action Two',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Cancel'),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(   // ⭐ NECESARIO PARA WEB
@@ -26,8 +62,29 @@ class ChatsScreen extends StatelessWidget {
 
           return CustomScrollView(
             slivers: [
-              const CupertinoSliverNavigationBar(
-                largeTitle: Text("Chats"),
+              CupertinoSliverNavigationBar(
+                largeTitle: const Text("Chats"),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: IconButton(
+                        icon: const Icon(CupertinoIcons.pencil),
+                        onPressed: () {},
+                        iconSize: 24,
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: IconButton(
+                        icon: const Icon(CupertinoIcons.add),
+                        onPressed: () => _showActionSheet(context),
+                        iconSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SliverToBoxAdapter(
                 child: Padding(

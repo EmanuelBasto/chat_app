@@ -1,6 +1,7 @@
 import 'package:chat_app/Models/people.dart';
 import 'package:chat_app/Models/me.dart';
 import 'package:chat_app/globla.dart';
+import 'package:chat_app/Screens/story_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,9 @@ class PeopleScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(2.5),
                         child: CircleAvatar(
                           radius: 28,
-                          backgroundImage: NetworkImage(me.avatar),
+                          backgroundImage: me.avatar.startsWith("http")
+                              ? NetworkImage(me.avatar)
+                              : AssetImage(me.avatar) as ImageProvider,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -103,7 +106,7 @@ class PeopleScreen extends StatelessWidget {
               // Recent Updates Section
               SliverToBoxAdapter(
                 child: Container(
-                  padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                  padding: const EdgeInsets.only(left: 16, top: 12, bottom: 8),
                   child: const Text(
                     "Recent Updates",
                     style: TextStyle(
@@ -116,48 +119,69 @@ class PeopleScreen extends StatelessWidget {
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 100,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    itemCount: recentUpdates.length,
-                    itemBuilder: (context, index) {
-                      final person = recentUpdates[index];
-                      return Container(
-                        width: 70,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 61,
-                              height: 61,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.red,
-                                  width: 2.5,
+                  height: 110,
+                  child: Scrollbar(
+                    thickness: 0,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: recentUpdates.length,
+                      itemBuilder: (context, index) {
+                        final person = recentUpdates[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => StoryScreen(person: person),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 75,
+                            margin: const EdgeInsets.only(right: 12),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 65,
+                                  height: 65,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.red,
+                                      width: 2.5,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(2.5),
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: person.avatar.startsWith("http")
+                                        ? NetworkImage(person.avatar)
+                                        : AssetImage(person.avatar) as ImageProvider,
+                                  ),
                                 ),
-                              ),
-                              padding: const EdgeInsets.all(2.5),
-                              child: CircleAvatar(
-                                radius: 28,
-                                backgroundImage: NetworkImage(person.avatar),
-                              ),
+                                const SizedBox(height: 6),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                                  child: Text(
+                                    "${person.first_name} ${person.last_name}",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "${person.first_name} ${person.last_name}",
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -169,7 +193,9 @@ class PeopleScreen extends StatelessWidget {
                       title: Text("${e.first_name} ${e.last_name}"),
                       subtitle: Text(e.status),
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage(e.avatar),
+                        backgroundImage: e.avatar.startsWith("http")
+                            ? NetworkImage(e.avatar)
+                            : AssetImage(e.avatar) as ImageProvider,
                       ),
                       trailing: Icon(
                         CupertinoIcons.chevron_right,

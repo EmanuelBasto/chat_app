@@ -81,10 +81,10 @@ class WhatsApp {
       "date": "Hoy",
       "count": 0,
       "story": true,
-      "image": "https://picsum.photos/300/200",
-      "avatar": "https://i.pravatar.cc/150?img=11",
+      "image": "assets/images/story_otilia.jpg",
+      "avatar": "assets/images/otilia.jpg",
       "status": "Disponible",
-      "stories": ["img1", "img2"]
+      "stories": ["assets/images/story_allene.jpg", "assets/images/story_carlos_m.jpg"]
     },
     {
       "first_name": "Laury",
@@ -93,10 +93,10 @@ class WhatsApp {
       "date": "Ayer",
       "count": 1,
       "story": true,
-      "image": "https://picsum.photos/300/201",
-      "avatar": "https://i.pravatar.cc/150?img=12",
+      "image": "assets/images/story_laury.jpg",
+      "avatar": "assets/images/laury.jpg",
       "status": "Ocupada",
-      "stories": ["img1"]
+      "stories": ["assets/images/story_daniel.jpg"]
     },
     {
       "first_name": "Jedidiah",
@@ -105,10 +105,10 @@ class WhatsApp {
       "date": "Dom",
       "count": 2,
       "story": true,
-      "image": "https://picsum.photos/300/202",
-      "avatar": "https://i.pravatar.cc/150?img=13",
+      "image": "assets/images/story_jedidiah.jpg",
+      "avatar": "assets/images/jedidiah.jpg",
       "status": "En el trabajo",
-      "stories": ["img1", "img2", "img3"]
+      "stories": ["assets/images/story_laura.jpg", "assets/images/story_miguel.jpg", "assets/images/story_sofia.jpg"]
     },
     {
       "first_name": "Sheridan",
@@ -117,10 +117,94 @@ class WhatsApp {
       "date": "8:15 AM",
       "count": 0,
       "story": true,
-      "image": "https://picsum.photos/300/203",
-      "avatar": "https://i.pravatar.cc/150?img=14",
+      "image": "assets/images/story_sheridan.jpg",
+      "avatar": "assets/images/sheridan.jpg",
       "status": "Conectada",
       "stories": []
+    },
+    {
+      "first_name": "Stacy",
+      "last_name": "Hermiston",
+      "msg": "Lorem ipsum",
+      "date": "Hoy",
+      "count": 0,
+      "story": true,
+      "image": "assets/images/story_otilia.jpg",
+      "avatar": "assets/images/otilia.jpg",
+      "status": "Disponible",
+      "stories": ["assets/images/story_marilie.jpg"]
+    },
+    {
+      "first_name": "Jessica",
+      "last_name": "Ratke",
+      "msg": "dolor sit amet",
+      "date": "Ayer",
+      "count": 1,
+      "story": true,
+      "image": "assets/images/story_laury.jpg",
+      "avatar": "assets/images/laury.jpg",
+      "status": "Ocupada",
+      "stories": ["assets/images/story_allene.jpg", "assets/images/story_carlos_m.jpg"]
+    },
+    {
+      "first_name": "Cristopher",
+      "last_name": "Hagenes",
+      "msg": "consectetur",
+      "date": "Dom",
+      "count": 0,
+      "story": true,
+      "image": "assets/images/story_jedidiah.jpg",
+      "avatar": "assets/images/jedidiah.jpg",
+      "status": "En el trabajo",
+      "stories": ["assets/images/story_daniel.jpg"]
+    },
+    {
+      "first_name": "Lewis",
+      "last_name": "Glover",
+      "msg": "adipiscing elit",
+      "date": "Lun",
+      "count": 2,
+      "story": true,
+      "image": "assets/images/story_sheridan.jpg",
+      "avatar": "assets/images/sheridan.jpg",
+      "status": "Conectada",
+      "stories": ["assets/images/story_laura.jpg", "assets/images/story_miguel.jpg"]
+    },
+    {
+      "first_name": "Beryl",
+      "last_name": "Wintheiser",
+      "msg": "sed do eiusmod",
+      "date": "Mar",
+      "count": 0,
+      "story": true,
+      "image": "assets/images/story_otilia.jpg",
+      "avatar": "assets/images/otilia.jpg",
+      "status": "Disponible",
+      "stories": ["assets/images/story_sofia.jpg"]
+    },
+    {
+      "first_name": "Vicenta",
+      "last_name": "Jaskolski",
+      "msg": "tempor incididunt",
+      "date": "Mié",
+      "count": 1,
+      "story": true,
+      "image": "assets/images/story_laury.jpg",
+      "avatar": "assets/images/laury.jpg",
+      "status": "Ocupada",
+      "stories": ["assets/images/story_marilie.jpg"]
+    },
+    {
+      "first_name": "Maurine",
+      "last_name": "Effertz",
+      "msg": "ut labore",
+      "date": "Jue",
+      "count": 0,
+      "story": true,
+      "image": "assets/images/story_jedidiah.jpg",
+      "avatar": "assets/images/jedidiah.jpg",
+      "status": "En el trabajo",
+      "stories": ["assets/images/story_allene.jpg", "assets/images/story_carlos_m.jpg"]
     },
     {
       "first_name": "Marilie",
@@ -129,8 +213,8 @@ class WhatsApp {
       "date": "Lun",
       "count": 4,
       "story": false,
-      "image": "https://picsum.photos/300/204",
-      "avatar": "https://i.pravatar.cc/150?img=15",
+      "image": "assets/images/story_marilie.jpg",
+      "avatar": "assets/images/marilie.jpg",
       "status": "Ausente",
       "stories": []
     },
@@ -141,8 +225,8 @@ class WhatsApp {
       "date": "Mar",
       "count": 0,
       "story": false,
-      "image": "https://picsum.photos/300/205",
-      "avatar": "https://i.pravatar.cc/150?img=16",
+      "image": "assets/images/story_allene.jpg",
+      "avatar": "assets/images/allene.jpg",
       "status": "Disponible",
       "stories": []
     },
@@ -153,8 +237,8 @@ class WhatsApp {
       "date": "Hoy",
       "count": 0,
       "story": false,
-      "image": "https://picsum.photos/300/206",
-      "avatar": "https://i.pravatar.cc/150?img=17",
+      "image": "assets/images/story_carlos_m.jpg",
+      "avatar": "assets/images/carlos_m.jpg",
       "status": "Disponible",
       "stories": []
     },
@@ -165,8 +249,8 @@ class WhatsApp {
       "date": "Ayer",
       "count": 1,
       "story": false,
-      "image": "https://picsum.photos/300/207",
-      "avatar": "https://i.pravatar.cc/150?img=18",
+      "image": "assets/images/story_laura.jpg",
+      "avatar": "assets/images/laura.jpg",
       "status": "Ocupada",
       "stories": []
     },
@@ -177,8 +261,8 @@ class WhatsApp {
       "date": "Dom",
       "count": 2,
       "story": false,
-      "image": "https://picsum.photos/300/208",
-      "avatar": "https://i.pravatar.cc/150?img=19",
+      "image": "assets/images/story_miguel.jpg",
+      "avatar": "assets/images/miguel.jpg",
       "status": "En el trabajo",
       "stories": []
     },
@@ -189,8 +273,8 @@ class WhatsApp {
       "date": "8:15 AM",
       "count": 0,
       "story": false,
-      "image": "https://picsum.photos/300/209",
-      "avatar": "https://i.pravatar.cc/150?img=20",
+      "image": "assets/images/story_sofia.jpg",
+      "avatar": "assets/images/sofia.jpg",
       "status": "Conectada",
       "stories": []
     },
@@ -201,8 +285,8 @@ class WhatsApp {
       "date": "Lun",
       "count": 4,
       "story": false,
-      "image": "https://picsum.photos/300/210",
-      "avatar": "https://i.pravatar.cc/150?img=21",
+      "image": "assets/images/story_daniel.jpg",
+      "avatar": "assets/images/daniel.jpg",
       "status": "Ausente",
       "stories": []
     },
@@ -256,34 +340,58 @@ static Future<List<CallsModel>> Calls() async {
 
   final fakeJson = [
     {
-      "name": "Juan Pérez",
-      "time": "10:20 AM",
+      "name": "Estefania Stokes",
+      "time": "10:27 AM",
+      "callType": "outgoing",
+      "profilePic": "assets/images/estefania.jpg"
+    },
+    {
+      "name": "Irma O'Reilly",
+      "time": "9:45 AM",
+      "callType": "outgoing",
+      "profilePic": "assets/images/irma.jpg"
+    },
+    {
+      "name": "Velma Brown",
+      "time": "Ayer",
+      "callType": "outgoing",
+      "profilePic": "assets/images/velma.jpg"
+    },
+    {
+      "name": "Eugenia O'Conner",
+      "time": "Ayer",
       "callType": "incoming",
-      "profilePic": "https://i.pravatar.cc/150?img=21"
+      "profilePic": "assets/images/eugenia.jpg"
+    },
+    {
+      "name": "Adaline Crooks",
+      "time": "Lun",
+      "callType": "incoming",
+      "profilePic": "assets/images/adaline.jpg"
+    },
+    {
+      "name": "Jonatan Hansen",
+      "time": "Dom",
+      "callType": "missed",
+      "profilePic": "assets/images/jonatan.jpg"
+    },
+    {
+      "name": "Juan Pérez",
+      "time": "Sáb",
+      "callType": "outgoing",
+      "profilePic": "assets/images/juan_calls.jpg"
     },
     {
       "name": "María López",
-      "time": "Ayer",
-      "callType": "missed",
-      "profilePic": "https://i.pravatar.cc/150?img=22"
+      "time": "Vie",
+      "callType": "incoming",
+      "profilePic": "assets/images/maria_calls.jpg"
     },
     {
       "name": "Carlos García",
-      "time": "Lun",
-      "callType": "outgoing",
-      "profilePic": "https://i.pravatar.cc/150?img=23"
-    },
-    {
-      "name": "Ana Torres",
-      "time": "Hoy 8:00 AM",
-      "callType": "incoming",
-      "profilePic": "https://i.pravatar.cc/150?img=24"
-    },
-    {
-      "name": "Roberto Cruz",
-      "time": "Mar",
+      "time": "Jue",
       "callType": "missed",
-      "profilePic": "https://i.pravatar.cc/150?img=25"
+      "profilePic": "assets/images/carlos_calls.jpg"
     },
   ];
 
@@ -294,24 +402,24 @@ static Future<List<CallsModel>> Calls() async {
 
 
 
-  static Future<MeModel> Me() async {
-  await Future.delayed(const Duration(milliseconds: 800));
+   static Future<MeModel> Me() async {
+   await Future.delayed(const Duration(milliseconds: 800));
 
-  final fakeJson = {
-    "first_name": "Alejandro",
-    "last_name": "Núñez",
-    "avatar": "assets/images/me.jpg",
-    "city": "Ciudad de México",
-    "relationship": "Soltero",
-    "gender": "Masculino",
-    "job_title": "Ingeniero de Software",
-    "job_area": "Tecnología",
-    "story": true,
-    "status": "Disponible",
-    "stories": ["img1", "img2", "img3"]
-  };
+   final fakeJson = {
+     "first_name": "Alejandro",
+     "last_name": "Núñez",
+     "avatar": "assets/images/me.jpg",
+     "city": "Ciudad de México",
+     "relationship": "Soltero",
+     "gender": "Masculino",
+     "job_title": "Ingeniero de Software",
+     "job_area": "Tecnología",
+     "story": true,
+     "status": "Disponible",
+     "stories": ["assets/images/story_daniel.jpg", "assets/images/story_laura.jpg", "assets/images/story_miguel.jpg"]
+   };
 
-  return MeModel.fromJson(fakeJson);
-}
+   return MeModel.fromJson(fakeJson);
+ }
 
 }

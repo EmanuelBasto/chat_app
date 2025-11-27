@@ -2,10 +2,17 @@ import 'package:chat_app/Screens/calls.dart';
 import 'package:chat_app/Screens/chats.dart';
 import 'package:chat_app/Screens/people.dart';
 import 'package:chat_app/Screens/settings.dart';
+import 'package:chat_app/Screens/login_screen.dart';
 import 'package:chat_app/globla.dart';
+import 'package:chat_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -22,7 +29,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: AppColors.primary,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LoginScreen(),
     );
   }
 }

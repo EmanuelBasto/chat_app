@@ -123,90 +123,6 @@ class WhatsApp {
       "stories": []
     },
     {
-      "first_name": "Stacy",
-      "last_name": "Hermiston",
-      "msg": "Lorem ipsum",
-      "date": "Hoy",
-      "count": 0,
-      "story": true,
-      "image": "assets/images/story_otilia.jpg",
-      "avatar": "assets/images/otilia.jpg",
-      "status": "Disponible",
-      "stories": ["assets/images/story_marilie.jpg"]
-    },
-    {
-      "first_name": "Jessica",
-      "last_name": "Ratke",
-      "msg": "dolor sit amet",
-      "date": "Ayer",
-      "count": 1,
-      "story": true,
-      "image": "assets/images/story_laury.jpg",
-      "avatar": "assets/images/laury.jpg",
-      "status": "Ocupada",
-      "stories": ["assets/images/story_allene.jpg", "assets/images/story_carlos_m.jpg"]
-    },
-    {
-      "first_name": "Cristopher",
-      "last_name": "Hagenes",
-      "msg": "consectetur",
-      "date": "Dom",
-      "count": 0,
-      "story": true,
-      "image": "assets/images/story_jedidiah.jpg",
-      "avatar": "assets/images/jedidiah.jpg",
-      "status": "En el trabajo",
-      "stories": ["assets/images/story_daniel.jpg"]
-    },
-    {
-      "first_name": "Lewis",
-      "last_name": "Glover",
-      "msg": "adipiscing elit",
-      "date": "Lun",
-      "count": 2,
-      "story": true,
-      "image": "assets/images/story_sheridan.jpg",
-      "avatar": "assets/images/sheridan.jpg",
-      "status": "Conectada",
-      "stories": ["assets/images/story_laura.jpg", "assets/images/story_miguel.jpg"]
-    },
-    {
-      "first_name": "Beryl",
-      "last_name": "Wintheiser",
-      "msg": "sed do eiusmod",
-      "date": "Mar",
-      "count": 0,
-      "story": true,
-      "image": "assets/images/story_otilia.jpg",
-      "avatar": "assets/images/otilia.jpg",
-      "status": "Disponible",
-      "stories": ["assets/images/story_sofia.jpg"]
-    },
-    {
-      "first_name": "Vicenta",
-      "last_name": "Jaskolski",
-      "msg": "tempor incididunt",
-      "date": "Mié",
-      "count": 1,
-      "story": true,
-      "image": "assets/images/story_laury.jpg",
-      "avatar": "assets/images/laury.jpg",
-      "status": "Ocupada",
-      "stories": ["assets/images/story_marilie.jpg"]
-    },
-    {
-      "first_name": "Maurine",
-      "last_name": "Effertz",
-      "msg": "ut labore",
-      "date": "Jue",
-      "count": 0,
-      "story": true,
-      "image": "assets/images/story_jedidiah.jpg",
-      "avatar": "assets/images/jedidiah.jpg",
-      "status": "En el trabajo",
-      "stories": ["assets/images/story_allene.jpg", "assets/images/story_carlos_m.jpg"]
-    },
-    {
       "first_name": "Marilie",
       "last_name": "Reinger",
       "msg": "sint nemo ut",
@@ -335,63 +251,350 @@ class WhatsApp {
   return fakeJson.map((e) => MessageModel.fromJson(e)).toList();
 }
 
+  static Future<List<MessageModel>> getChatMessages(String contactName) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    // Mensajes de prueba basados en la imagen - expandidos para permitir scroll
+    final fakeJson = [
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/nature",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Hic corrupti laboriosam soluta voluptatum asperiores sed doloribus culpa similique consequatur at recusandae beatae qui a qui eius dolorum blanditiis.",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://www.youtube.com/watch?v=lTmoxYjtZZO",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Eligendi sed soluta rem ipsa at sunt praesentium minima ut doloremque rem dolor reprehenderit error non et non repellat nobis.",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/technics",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://www.youtube.com/watch?v=W-dYWkcqFXc",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/cats",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/technics",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "¡Hola! ¿Cómo estás?",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Muy bien, gracias. ¿Y tú qué tal?",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Perfecto, aquí trabajando en el proyecto",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Qué bien! ¿Necesitas ayuda con algo?",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Gracias, por ahora todo bien",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://www.example.com/article",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Interesante, lo revisaré más tarde",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Perfecto, avísame qué te parece",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Claro, sin problema",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/abstract",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Wow, qué imagen tan genial!",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Me alegra que te guste",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "¿Vamos a almorzar juntos?",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Sí, claro. ¿A qué hora?",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "A la 1:30 PM, ¿te va bien?",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Perfecto, nos vemos entonces",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Jaja, muy bueno ese video",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Sabía que te gustaría",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/business",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Necesito tu opinión sobre esto",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Déjame verlo con calma y te respondo",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Perfecto, no hay prisa",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "¿Qué planes tienes para el fin de semana?",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Nada especial, probablemente descansar",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Suena bien, todos necesitamos un descanso",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Exacto, el descanso es importante",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "https://loremflickr.com/640/480/food",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Se ve delicioso!",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Es de un nuevo restaurante que encontré",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "Tenemos que ir juntos algún día",
+        "sender": true,
+        "type": "text",
+        "opened": true,
+      },
+      {
+        "image": "",
+        "msg": "¡Por supuesto! Te invito",
+        "sender": false,
+        "type": "text",
+        "opened": true,
+      },
+    ];
+
+    return fakeJson.map((e) => MessageModel.fromJson(e)).toList();
+  }
+
 static Future<List<CallsModel>> Calls() async {
   await Future.delayed(const Duration(milliseconds: 800));
 
   final fakeJson = [
     {
-      "name": "Estefania Stokes",
-      "time": "10:27 AM",
-      "callType": "outgoing",
-      "profilePic": "assets/images/estefania.jpg"
-    },
-    {
-      "name": "Irma O'Reilly",
-      "time": "9:45 AM",
-      "callType": "outgoing",
-      "profilePic": "assets/images/irma.jpg"
-    },
-    {
-      "name": "Velma Brown",
-      "time": "Ayer",
-      "callType": "outgoing",
-      "profilePic": "assets/images/velma.jpg"
-    },
-    {
-      "name": "Eugenia O'Conner",
-      "time": "Ayer",
-      "callType": "incoming",
-      "profilePic": "assets/images/eugenia.jpg"
-    },
-    {
-      "name": "Adaline Crooks",
-      "time": "Lun",
-      "callType": "incoming",
-      "profilePic": "assets/images/adaline.jpg"
-    },
-    {
-      "name": "Jonatan Hansen",
-      "time": "Dom",
-      "callType": "missed",
-      "profilePic": "assets/images/jonatan.jpg"
-    },
-    {
       "name": "Juan Pérez",
-      "time": "Sáb",
-      "callType": "outgoing",
-      "profilePic": "assets/images/juan_calls.jpg"
+      "time": "10:20 AM",
+      "callType": "incoming",
+      "profilePic": "https://i.pravatar.cc/150?img=21"
     },
     {
       "name": "María López",
-      "time": "Vie",
-      "callType": "incoming",
-      "profilePic": "assets/images/maria_calls.jpg"
+      "time": "Ayer",
+      "callType": "missed",
+      "profilePic": "https://i.pravatar.cc/150?img=22"
     },
     {
       "name": "Carlos García",
-      "time": "Jue",
+      "time": "Lun",
+      "callType": "outgoing",
+      "profilePic": "https://i.pravatar.cc/150?img=23"
+    },
+    {
+      "name": "Ana Torres",
+      "time": "Hoy 8:00 AM",
+      "callType": "incoming",
+      "profilePic": "https://i.pravatar.cc/150?img=24"
+    },
+    {
+      "name": "Roberto Cruz",
+      "time": "Mar",
       "callType": "missed",
-      "profilePic": "assets/images/carlos_calls.jpg"
+      "profilePic": "https://i.pravatar.cc/150?img=25"
     },
   ];
 

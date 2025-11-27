@@ -3,6 +3,7 @@ import 'package:chat_app/globla.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/Components/my_list_tile.dart';
+import 'package:chat_app/Screens/chat_detail_screen.dart';
 
 class ChatsScreen extends StatelessWidget {
   const ChatsScreen({Key? key}) : super(key: key);
@@ -101,7 +102,13 @@ class ChatsScreen extends StatelessWidget {
                     final e = chats[index];
                     return MyListTile(
                       model: e,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (context) => ChatDetailScreen(chat: e),
+                          ),
+                        );
+                      },
                       onImageTap: () {},
                     );
                   },

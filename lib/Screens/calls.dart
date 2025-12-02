@@ -2,6 +2,7 @@ import 'package:chat_app/Models/calls.dart';
 import 'package:chat_app/globla.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 class CallsScreen extends StatelessWidget {
   const CallsScreen({Key? key}) : super(key: key);
 
@@ -23,6 +24,7 @@ class CallsScreen extends StatelessWidget {
           final calls = snapshot.data!;
 
           return CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               CupertinoSliverNavigationBar(
                 largeTitle: const Text("Calls"),
@@ -67,8 +69,8 @@ class CallsScreen extends StatelessWidget {
                           callTypeText = 'Incoming';
                           break;
                         case 'missed':
-                          callIcon = CupertinoIcons.phone_badge_plus;
-                          iconColor = Colors.grey.shade600;
+                          callIcon = CupertinoIcons.phone_arrow_down_left;
+                          iconColor = Colors.red;
                           callTypeText = 'Missed';
                           break;
                         default:
@@ -78,30 +80,45 @@ class CallsScreen extends StatelessWidget {
                       }
                       
                       return ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
+                        ),
+                        minLeadingWidth: 60,
                         title: Text(
                           e.name,
                           style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
+                            color: Colors.black87,
                           ),
                         ),
-                        subtitle: Text(
-                          "$callTypeText • ${e.time}",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey.shade600,
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Text(
+                            callTypeText,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: e.callType.toLowerCase() == 'missed' 
+                                  ? Colors.red 
+                                  : Colors.grey.shade600,
+                            ),
                           ),
                         ),
                         leading: CircleAvatar(
                           radius: 28,
+                          backgroundColor: Colors.grey.shade200,
                           backgroundImage: e.profilePic.startsWith("http")
                               ? NetworkImage(e.profilePic)
                               : AssetImage(e.profilePic) as ImageProvider,
                         ),
-                        trailing: Icon(
-                          callIcon,
-                          color: iconColor,
-                          size: 20,
+                        trailing: Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Icon(
+                            callIcon,
+                            color: iconColor,
+                            size: 20,
+                          ),
                         ),
                       );
                     },

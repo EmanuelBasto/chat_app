@@ -1,0 +1,31 @@
+type User @table {
+  username: String!
+  createdAt: Timestamp!
+  email: String
+  passwordHash: String
+}
+
+type PhoneNumber @table {
+  user: User!
+  number: String!
+  isVerified: Boolean!
+  createdAt: Timestamp!
+  countryCode: String
+  updatedAt: Timestamp
+}
+
+type VerificationCode @table {
+  phoneNumber: PhoneNumber!
+  code: String!
+  expiresAt: Timestamp!
+  createdAt: Timestamp!
+  attempts: Int
+}
+
+type AuthEvent @table {
+  user: User!
+  eventType: String!
+  timestamp: Timestamp!
+  ipAddress: String
+  deviceInfo: String
+}

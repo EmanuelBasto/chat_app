@@ -31,6 +31,67 @@
 
   <title>chat_app</title>
   <link rel="manifest" href="manifest.json">
+  
+  <style>
+    /* Ocultar el banner de "Running in emulator mode" */
+    body > div[style*="position: fixed"][style*="bottom"] {
+      display: none !important;
+    }
+    /* Ocultar cualquier banner de emulador */
+    [data-emulator-banner],
+    .emulator-warning,
+    .firebase-emulator-warning {
+      display: none !important;
+    }
+  </style>
+  
+  <script>
+    // Script para ocultar el banner del emulador cuando se agregue dinámicamente
+    (function() {
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) { // Element node
+              // Buscar texto relacionado con emulator
+              if (node.textContent && node.textContent.includes('emulator')) {
+                node.style.display = 'none';
+              }
+              // Buscar elementos hijos que contengan el texto
+              const emulatorElements = node.querySelectorAll ? 
+                node.querySelectorAll('*') : [];
+              emulatorElements.forEach(function(el) {
+                if (el.textContent && el.textContent.includes('emulator')) {
+                  el.style.display = 'none';
+                  if (el.parentElement) {
+                    el.parentElement.style.display = 'none';
+                  }
+                }
+              });
+            }
+          });
+        });
+      });
+      
+      // Observar cambios en el DOM
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+      
+      // También ocultar cualquier elemento existente
+      setTimeout(function() {
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(function(el) {
+          if (el.textContent && el.textContent.includes('Running in emulator mode')) {
+            el.style.display = 'none';
+            if (el.parentElement) {
+              el.parentElement.style.display = 'none';
+            }
+          }
+        });
+      }, 1000);
+    })();
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

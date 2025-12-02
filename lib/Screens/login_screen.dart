@@ -1,4 +1,5 @@
 import 'package:chat_app/globla.dart';
+import 'package:chat_app/Screens/phone_login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -89,7 +90,12 @@ class LoginScreen extends StatelessWidget {
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  // TODO: Implementar inicio de sesión con teléfono
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const PhoneLoginScreen(),
+                    ),
+                  );
                 },
                 child: Container(
                   width: double.infinity,

@@ -567,34 +567,40 @@ static Future<List<CallsModel>> Calls() async {
 
   final fakeJson = [
     {
-      "name": "Juan Pérez",
+      "name": "Axel Quigley",
       "time": "10:20 AM",
-      "callType": "incoming",
-      "profilePic": "https://i.pravatar.cc/150?img=21"
+      "callType": "outgoing",
+      "profilePic": "assets/images/Juan.jpg"
     },
     {
-      "name": "María López",
+      "name": "Asia Pouros",
+      "time": "Ayer",
+      "callType": "outgoing",
+      "profilePic": "assets/images/MariaP.jpg"
+    },
+    {
+      "name": "Emmie Weimann",
+      "time": "Lun",
+      "callType": "missed",
+      "profilePic": "assets/images/CarlosG.jpg"
+    },
+    {
+      "name": "Concepcion Bauch",
+      "time": "Hoy 8:00 AM",
+      "callType": "outgoing",
+      "profilePic": "assets/images/AnaT.jpg"
+    },
+    {
+      "name": "Daniela Stark",
+      "time": "Mar",
+      "callType": "incoming",
+      "profilePic": "assets/images/RobertoT.jpg"
+    },
+    {
+      "name": "Garnet Hermiston",
       "time": "Ayer",
       "callType": "missed",
-      "profilePic": "https://i.pravatar.cc/150?img=22"
-    },
-    {
-      "name": "Carlos García",
-      "time": "Lun",
-      "callType": "outgoing",
-      "profilePic": "https://i.pravatar.cc/150?img=23"
-    },
-    {
-      "name": "Ana Torres",
-      "time": "Hoy 8:00 AM",
-      "callType": "incoming",
-      "profilePic": "https://i.pravatar.cc/150?img=24"
-    },
-    {
-      "name": "Roberto Cruz",
-      "time": "Mar",
-      "callType": "missed",
-      "profilePic": "https://i.pravatar.cc/150?img=25"
+      "profilePic": "assets/images/laura.jpg"
     },
   ];
 

@@ -73,25 +73,48 @@ class _SmsCodeScreenState extends State<SmsCodeScreen> {
       if (!mounted) return;
 
       if (userCredential?.user != null) {
-        // Verificar si el usuario ya tiene nombre configurado
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential!.user!.uid)
-            .get();
-
         if (!mounted) return;
+        
+        // Esperar un momento para que Firestore se actualice
+        await Future.delayed(const Duration(milliseconds: 800));
+        
+        try {
+          // Verificar si el usuario ya tiene nombre configurado
+          final userDoc = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential!.user!.uid)
+              .get();
 
-        if (userDoc.exists && userDoc.data()?['name'] != null && 
-            (userDoc.data()?['name'] as String).isNotEmpty) {
-          // Usuario ya tiene perfil, ir directo a chats
-          Navigator.of(context).pushAndRemoveUntil(
-            CupertinoPageRoute(
-              builder: (context) => const MyHomePage(title: 'Chat App'),
-            ),
-            (route) => false,
-          );
-        } else {
-          // Usuario nuevo, mostrar pantalla de configuración de perfil
+          if (!mounted) return;
+
+          final userData = userDoc.data();
+          final hasName = userData != null && 
+                         userData['name'] != null && 
+                         userData['name'] is String &&
+                         (userData['name'] as String).trim().isNotEmpty;
+
+          if (!mounted) return;
+
+          if (hasName) {
+            // Usuario ya tiene perfil, ir directo a chats
+            Navigator.of(context).pushAndRemoveUntil(
+              CupertinoPageRoute(
+                builder: (context) => const MyHomePage(title: 'Chat App'),
+              ),
+              (route) => false,
+            );
+          } else {
+            // Usuario nuevo, mostrar pantalla de configuración de perfil
+            Navigator.of(context).pushAndRemoveUntil(
+              CupertinoPageRoute(
+                builder: (context) => const ProfileSetupScreen(),
+              ),
+              (route) => false,
+            );
+          }
+        } catch (e) {
+          // En caso de error, siempre mostrar pantalla de configuración
+          if (!mounted) return;
           Navigator.of(context).pushAndRemoveUntil(
             CupertinoPageRoute(
               builder: (context) => const ProfileSetupScreen(),

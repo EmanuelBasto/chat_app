@@ -68,9 +68,19 @@ class PeopleScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(2.5),
                         child: CircleAvatar(
                           radius: 28,
-                          backgroundImage: me.avatar.startsWith("http")
-                              ? NetworkImage(me.avatar)
-                              : AssetImage(me.avatar) as ImageProvider,
+                          backgroundColor: Colors.grey.shade200,
+                          backgroundImage: me.avatar.isNotEmpty
+                              ? (me.avatar.startsWith("http")
+                                  ? NetworkImage(me.avatar)
+                                  : AssetImage(me.avatar) as ImageProvider)
+                              : null,
+                          child: me.avatar.isEmpty
+                              ? Icon(
+                                  CupertinoIcons.person_fill,
+                                  size: 28,
+                                  color: Colors.grey.shade600,
+                                )
+                              : null,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -78,16 +88,16 @@ class PeopleScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "My Status",
-                              style: TextStyle(
+                            Text(
+                              "${me.firstName} ${me.lastName}".trim(),
+                              style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             const SizedBox(height: 3),
                             Text(
-                              "Update status",
+                              me.status.isNotEmpty ? me.status : "Update status",
                               style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.grey.shade600,

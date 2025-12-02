@@ -144,7 +144,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
       // Subir imagen de perfil si existe
       String? profileImageUrl;
-      if (_profileImage != null) {
+      if (_profileImage != null || _profileImageBytes != null) {
         profileImageUrl = await _uploadProfileImage();
       }
 

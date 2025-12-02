@@ -1,13 +1,106 @@
 import 'package:chat_app/Models/chats.dart';
 import 'package:chat_app/Models/message.dart';
 import 'package:chat_app/globla.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChatDetailScreen extends StatelessWidget {
+class ChatDetailScreen extends StatefulWidget {
   final ChatsModel chat;
 
   const ChatDetailScreen({Key? key, required this.chat}) : super(key: key);
+
+  @override
+  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+}
+
+class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  String _getChatId() {
+    // Crear un ID único para el chat basado en el nombre del contacto
+    // En una app real, usarías los UIDs de los usuarios
+    final currentUserId = _currentUser?.uid ?? 'current_user';
+    final contactName = widget.chat.name;
+    // Ordenar para que siempre sea el mismo ID independientemente del orden
+    final participants = [currentUserId, contactName]..sort();
+    return participants.join('_');
+  }
+
+  Future<void> _sendMessage() async {
+    final messageText = _messageController.text.trim();
+    final currentUser = _currentUser;
+    if (messageText.isEmpty || currentUser == null) return;
+
+    try {
+      final chatId = _getChatId();
+      final currentUserId = currentUser.uid;
+      final messageRef = _firestore
+          .collection('chats')
+          .doc(chatId)
+          .collection('messages')
+          .doc();
+
+      await messageRef.set({
+        'msg': messageText,
+        'sender': true, // true = usuario actual, false = contacto
+        'senderId': currentUserId,
+        'type': 'text',
+        'opened': false,
+        'image': '',
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      // Actualizar el último mensaje en la colección de chats
+      await _firestore.collection('chats').doc(chatId).set({
+        'lastMessage': messageText,
+        'lastMessageTime': FieldValue.serverTimestamp(),
+        'participants': [currentUserId, widget.chat.name],
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      _messageController.clear();
+      
+      // Scroll al final después de un pequeño delay
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
+    } catch (e) {
+      print('Error al enviar mensaje: $e');
+      if (mounted) {
+        showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoAlertDialog(
+            title: const Text('Error'),
+            content: Text('No se pudo enviar el mensaje: $e'),
+            actions: [
+              CupertinoDialogAction(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +127,15 @@ class ChatDetailScreen extends StatelessWidget {
               ),
             ),
 
-            // Lista de mensajes
+            // Lista de mensajes con StreamBuilder para tiempo real
             Expanded(
-              child: FutureBuilder<List<MessageModel>>(
-                future: WhatsApp.getChatMessages(chat.name),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _firestore
+                    .collection('chats')
+                    .doc(_getChatId())
+                    .collection('messages')
+                    .orderBy('timestamp', descending: false)
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -45,25 +143,73 @@ class ChatDetailScreen extends StatelessWidget {
                     );
                   }
 
-                  if (snapshot.hasError || !snapshot.hasData) {
-                    return const Center(
+                  if (snapshot.hasError) {
+                    return Center(
                       child: Text(
-                        'Error al cargar mensajes',
-                        style: TextStyle(color: CupertinoColors.black),
+                        'Error al cargar mensajes: ${snapshot.error}',
+                        style: const TextStyle(color: CupertinoColors.black),
                       ),
                     );
                   }
 
-                  final messages = snapshot.data!;
+                  // Obtener mensajes de Firestore
+                  final firestoreMessages = snapshot.data?.docs ?? [];
+                  
+                  // Combinar mensajes de prueba con mensajes de Firestore
+                  return FutureBuilder<List<MessageModel>>(
+                    future: WhatsApp.getChatMessages(widget.chat.name),
+                    builder: (context, futureSnapshot) {
+                      List<MessageModel> allMessages = [];
+                      
+                      // Agregar mensajes de prueba primero (si existen)
+                      if (futureSnapshot.hasData) {
+                        allMessages.addAll(futureSnapshot.data!);
+                      }
+                      
+                      // Agregar mensajes de Firestore
+                      for (var doc in firestoreMessages) {
+                        final messageData = doc.data() as Map<String, dynamic>;
+                        final message = MessageModel(
+                          image: messageData['image'] ?? '',
+                          msg: messageData['msg'] ?? '',
+                          sender: messageData['sender'] ?? false,
+                          type: messageData['type'] ?? 'text',
+                          opened: messageData['opened'] ?? false,
+                        );
+                        allMessages.add(message);
+                      }
+                      
+                      // Scroll al final cuando se cargan los mensajes
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_scrollController.hasClients) {
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        }
+                      });
 
-                  return ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      return _buildMessageBubble(messages[index]);
+                      if (allMessages.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'No hay mensajes',
+                            style: TextStyle(color: CupertinoColors.black),
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                        controller: _scrollController,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
+                        itemCount: allMessages.length,
+                        itemBuilder: (context, index) {
+                          return _buildMessageBubble(allMessages[index]);
+                        },
+                      );
                     },
                   );
                 },
@@ -110,7 +256,7 @@ class ChatDetailScreen extends StatelessWidget {
           // Nombre del contacto
           Expanded(
             child: Text(
-              chat.name,
+              widget.chat.name,
               style: const TextStyle(
                 color: CupertinoColors.black,
                 fontSize: 22,
@@ -240,6 +386,7 @@ class ChatDetailScreen extends StatelessWidget {
           // Campo de texto
           Expanded(
             child: CupertinoTextField(
+              controller: _messageController,
               placeholder: 'type something...',
               placeholderStyle: TextStyle(color: Colors.grey.shade600),
               style: const TextStyle(color: CupertinoColors.black),
@@ -248,6 +395,7 @@ class ChatDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              onSubmitted: (_) => _sendMessage(),
             ),
           ),
 
@@ -270,7 +418,7 @@ class ChatDetailScreen extends StatelessWidget {
                   size: 20,
                 ),
               ),
-              onPressed: () {},
+              onPressed: _sendMessage,
             ),
           ),
         ],

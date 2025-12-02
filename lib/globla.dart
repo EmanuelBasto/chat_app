@@ -4,6 +4,8 @@ import 'package:chat_app/Models/message.dart';
 import 'package:chat_app/Models/people.dart';
 import 'package:chat_app/Models/me.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppColors {
   static Color? primary = const Color(0xFFC10000);
@@ -612,23 +614,100 @@ static Future<List<CallsModel>> Calls() async {
 
 
    static Future<MeModel> Me() async {
-   await Future.delayed(const Duration(milliseconds: 800));
+     try {
+       final user = FirebaseAuth.instance.currentUser;
+       
+       if (user == null) {
+         // Si no hay usuario autenticado, devolver datos por defecto
+         final fakeJson = {
+           "first_name": "Usuario",
+           "last_name": "",
+           "avatar": "assets/images/me.jpg",
+           "city": "",
+           "relationship": "",
+           "gender": "",
+           "job_title": "",
+           "job_area": "",
+           "story": false,
+           "status": "Disponible",
+           "stories": []
+         };
+         return MeModel.fromJson(fakeJson);
+       }
 
-   final fakeJson = {
-     "first_name": "Alejandro",
-     "last_name": "Núñez",
-     "avatar": "assets/images/me.jpg",
-     "city": "Ciudad de México",
-     "relationship": "Soltero",
-     "gender": "Masculino",
-     "job_title": "Ingeniero de Software",
-     "job_area": "Tecnología",
-     "story": true,
-     "status": "Disponible",
-     "stories": ["assets/images/story_daniel.jpg", "assets/images/story_laura.jpg", "assets/images/story_miguel.jpg"]
-   };
+       // Obtener datos del usuario desde Firestore
+       final userDoc = await FirebaseFirestore.instance
+           .collection('users')
+           .doc(user.uid)
+           .get();
 
-   return MeModel.fromJson(fakeJson);
- }
+       if (!userDoc.exists) {
+         // Si no existe el documento, devolver datos por defecto
+         final name = user.displayName ?? "Usuario";
+         final nameParts = name.split(' ');
+         final firstName = nameParts.isNotEmpty ? nameParts[0] : "Usuario";
+         final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : "";
+         
+         final fakeJson = {
+           "first_name": firstName,
+           "last_name": lastName,
+           "avatar": user.photoURL ?? "assets/images/me.jpg",
+           "city": "",
+           "relationship": "",
+           "gender": "",
+           "job_title": "",
+           "job_area": "",
+           "story": false,
+           "status": "Disponible",
+           "stories": []
+         };
+         return MeModel.fromJson(fakeJson);
+       }
+
+       final userData = userDoc.data() as Map<String, dynamic>;
+       
+       // Dividir el nombre en first_name y last_name
+       final name = userData['name'] ?? user.displayName ?? "Usuario";
+       final nameParts = name.split(' ');
+       final firstName = nameParts.isNotEmpty ? nameParts[0] : "Usuario";
+       final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : "";
+       
+       // Obtener la URL de la imagen de perfil
+       final profileImageUrl = userData['profileImageUrl'] ?? user.photoURL ?? "assets/images/me.jpg";
+       
+       final json = {
+         "first_name": firstName,
+         "last_name": lastName,
+         "avatar": profileImageUrl,
+         "city": userData['city'] ?? "",
+         "relationship": userData['relationship'] ?? "",
+         "gender": userData['gender'] ?? "",
+         "job_title": userData['job_title'] ?? "",
+         "job_area": userData['job_area'] ?? "",
+         "story": userData['story'] ?? false,
+         "status": userData['status'] ?? "Disponible",
+         "stories": List<String>.from(userData['stories'] ?? [])
+       };
+
+       return MeModel.fromJson(json);
+     } catch (e) {
+       print('Error obteniendo datos del usuario: $e');
+       // En caso de error, devolver datos por defecto
+       final fakeJson = {
+         "first_name": "Usuario",
+         "last_name": "",
+         "avatar": "assets/images/me.jpg",
+         "city": "",
+         "relationship": "",
+         "gender": "",
+         "job_title": "",
+         "job_area": "",
+         "story": false,
+         "status": "Disponible",
+         "stories": []
+       };
+       return MeModel.fromJson(fakeJson);
+     }
+   }
 
 }

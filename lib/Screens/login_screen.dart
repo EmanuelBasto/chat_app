@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               
               // Texto "keynotecast chat"
               const Text(
-                'keynotecast chat',
+                'Dragon Fridman chat',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -128,7 +128,7 @@ class LoginScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(bottom: 30),
                 child: Text(
-                  'By signing in, you agree to our terms and conditions.',
+                  'inicia sesión para conectar con tus amigos',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
@@ -143,54 +143,13 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  /// Construye el logo de la app con dos círculos superpuestos
-  /// Círculo azul detrás y círculo rojo delante con llaves {}
+  /// Construye el logo de la app usando la imagen Logo.jpg
   Widget _buildLogo() {
-    return SizedBox(
+    return Image.asset(
+      'assets/images/Logo.jpg',
       width: 120,
       height: 90,
-      child: Stack(
-        children: [
-          // Burbuja azul oscuro (detrás, a la izquierda) - Representa el diseño visual
-          Positioned(
-            left: 0,
-            top: 5,
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E3A8A),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          
-          // Burbuja roja (delante, a la derecha) con llaves
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Text(
-                  '{}',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: CupertinoColors.white,
-                    height: 1.2,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      fit: BoxFit.contain,
     );
   }
 }

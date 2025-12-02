@@ -10,7 +10,7 @@ class CallsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(   // ⭐ NECESARIO PARA WEB
+    return Material(   // NECESARIO PARA WEB
       child: FutureBuilder<List<CallsModel>>(
         future: WhatsApp.Calls(),
         builder: (context, snapshot) {

@@ -3,6 +3,8 @@ import 'package:chat_app/Screens/phone_login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Pantalla inicial de login
+/// Muestra el logo de la app y un botón para iniciar sesión con teléfono
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 40),
               
-              // Logo con dos burbujas de chat
+              // Logo con dos burbujas de chat (azul y roja con llaves {})
               _buildLogo(),
               
               const SizedBox(height: 20),
@@ -141,13 +143,15 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  /// Construye el logo de la app con dos círculos superpuestos
+  /// Círculo azul detrás y círculo rojo delante con llaves {}
   Widget _buildLogo() {
     return SizedBox(
       width: 120,
       height: 90,
       child: Stack(
         children: [
-          // Burbuja azul oscuro (detrás, a la izquierda)
+          // Burbuja azul oscuro (detrás, a la izquierda) - Representa el diseño visual
           Positioned(
             left: 0,
             top: 5,

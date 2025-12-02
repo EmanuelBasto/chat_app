@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Pantalla de configuración de la aplicación
+/// Muestra opciones como mensajes destacados, dispositivos vinculados,
+/// cuenta, chats, notificaciones, almacenamiento, ayuda, etc.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 

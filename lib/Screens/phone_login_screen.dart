@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// Pantalla para ingresar el número de teléfono
+/// Permite seleccionar país y enviar código SMS de verificación
 class PhoneLoginScreen extends StatefulWidget {
   const PhoneLoginScreen({Key? key}) : super(key: key);
 
@@ -13,12 +15,13 @@ class PhoneLoginScreen extends StatefulWidget {
 }
 
 class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
-  final TextEditingController _phoneController = TextEditingController();
-  final AuthService _authService = AuthService();
-  String _selectedCountry = 'Mexico';
-  String _countryCode = '+52';
-  bool _isLoading = false;
+  final TextEditingController _phoneController = TextEditingController();  // Controlador para el campo de teléfono
+  final AuthService _authService = AuthService();                        // Servicio de autenticación
+  String _selectedCountry = 'Mexico';                                    // País seleccionado
+  String _countryCode = '+52';                                            // Código de país (México por defecto)
+  bool _isLoading = false;                                                // Indica si se está enviando el código
 
+  // Limpiar recursos cuando el widget se destruye
   @override
   void dispose() {
     _phoneController.dispose();
@@ -49,10 +52,10 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
               
               const SizedBox(height: 40),
               
-              // Selector de país
+              // Selector de país - Al tocar muestra un menú con países disponibles
               GestureDetector(
                 onTap: () {
-                  _showCountryPicker(context);
+                  _showCountryPicker(context);  // Muestra el selector de países
                 },
                 child: Row(
                   children: [
@@ -76,7 +79,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
               
               const SizedBox(height: 20),
               
-              // Campo de entrada de número de teléfono
+              // Campo de entrada de número de teléfono con código de país
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -130,10 +133,10 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
               
               const SizedBox(height: 50),
               
-              // Botón "Next"
+              // Botón "Next" - Envía el código SMS al número ingresado
               CupertinoButton(
                 padding: EdgeInsets.zero,
-                onPressed: _isLoading ? null : _sendSmsCode,
+                onPressed: _isLoading ? null : _sendSmsCode,  // Deshabilitado mientras carga
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -183,30 +186,34 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
     );
   }
 
+  /// Envía el código SMS al número de teléfono ingresado
+  /// Combina el código de país con el número y solicita el envío del código
   Future<void> _sendSmsCode() async {
+    // Validar que se haya ingresado un número
     if (_phoneController.text.isEmpty) {
       return;
     }
 
     setState(() {
-      _isLoading = true;
+      _isLoading = true;  // Mostrar indicador de carga
     });
 
     try {
+      // Combinar código de país con número de teléfono
       final phoneNumber = _countryCode + _phoneController.text;
       
-      // Enviar código SMS
+      // Enviar código SMS usando Firebase Auth
       final verificationId = await _authService.sendSmsCodeWithVerificationId(phoneNumber);
       
       if (!mounted) return;
 
-      // Navegar a pantalla de código SMS
+      // Navegar a pantalla donde el usuario ingresa el código recibido
       await Navigator.push(
         context,
         CupertinoPageRoute(
           builder: (context) => SmsCodeScreen(
             phoneNumber: phoneNumber,
-            verificationId: verificationId,
+            verificationId: verificationId,  // ID necesario para verificar el código
           ),
         ),
       );
@@ -235,12 +242,15 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
     }
   }
 
+  /// Muestra un menú modal con opciones de países para seleccionar
+  /// Actualiza el código de país según la selección
   void _showCountryPicker(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
         title: const Text('Select Country'),
         actions: <CupertinoActionSheetAction>[
+          // Opciones de países disponibles (Estados Unidos, México, Colombia, España)
           CupertinoActionSheetAction(
             onPressed: () {
               setState(() {

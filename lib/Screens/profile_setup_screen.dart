@@ -12,6 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:typed_data';
 
+/// Pantalla para configurar el perfil del usuario después del primer login
+/// Permite ingresar nombre, estado y foto de perfil
+/// Guarda la información en Firebase Firestore y Storage
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({Key? key}) : super(key: key);
 
@@ -20,13 +23,13 @@ class ProfileSetupScreen extends StatefulWidget {
 }
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _statusController = TextEditingController();
-  final AuthService _authService = AuthService();
-  File? _profileImage;
-  Uint8List? _profileImageBytes;
-  bool _isLoading = false;
-  final ImagePicker _imagePicker = ImagePicker();
+  final TextEditingController _nameController = TextEditingController();      // Controlador para el campo de nombre
+  final TextEditingController _statusController = TextEditingController();     // Controlador para el campo de estado
+  final AuthService _authService = AuthService();                              // Servicio de autenticación
+  File? _profileImage;                                                        // Archivo de imagen (para móvil)
+  Uint8List? _profileImageBytes;                                               // Bytes de imagen (para web)
+  bool _isLoading = false;                                                    // Indica si se está guardando el perfil
+  final ImagePicker _imagePicker = ImagePicker();                             // Selector de imágenes
 
   @override
   void dispose() {
@@ -35,18 +38,21 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     super.dispose();
   }
 
+  /// Permite al usuario seleccionar una imagen de su galería
+  /// Maneja diferentes formatos para web (bytes) y móvil (File)
   Future<void> _pickImage() async {
     try {
+      // Abrir selector de imágenes desde la galería
       final XFile? image = await _imagePicker.pickImage(
         source: ImageSource.gallery,
-        maxWidth: 512,
+        maxWidth: 512,      // Redimensionar para optimizar
         maxHeight: 512,
-        imageQuality: 85,
+        imageQuality: 85,   // Calidad de compresión
       );
 
       if (image != null) {
         if (kIsWeb) {
-          // Para web, leer los bytes de la imagen
+          // Para web, leer los bytes de la imagen (no se puede usar File)
           final bytes = await image.readAsBytes();
           setState(() {
             _profileImageBytes = bytes;
@@ -77,6 +83,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     }
   }
 
+  /// Sube la imagen de perfil a Firebase Storage
+  /// Retorna la URL de descarga de la imagen subida
   Future<String?> _uploadProfileImage() async {
     if (_profileImage == null && _profileImageBytes == null) return null;
 
@@ -84,10 +92,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) return null;
 
+      // Crear referencia en Firebase Storage con el UID del usuario como nombre
       final storageRef = FirebaseStorage.instance
           .ref()
-          .child('profile_images')
-          .child('${user.uid}.jpg');
+          .child('profile_images')      // Carpeta en Storage
+          .child('${user.uid}.jpg');    // Nombre único basado en UID
 
       if (kIsWeb && _profileImageBytes != null) {
         // Para web, subir los bytes
@@ -108,7 +117,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     }
   }
 
+  /// Guarda el perfil del usuario en Firebase
+  /// Actualiza el display name en Auth, sube la imagen a Storage
+  /// y guarda todos los datos en Firestore
   Future<void> _saveProfile() async {
+    // Validar que se haya ingresado un nombre
     if (_nameController.text.trim().isEmpty) {
       showCupertinoDialog(
         context: context,
@@ -127,31 +140,32 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     }
 
     setState(() {
-      _isLoading = true;
+      _isLoading = true;  // Mostrar indicador de carga
     });
 
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
+        // Si no hay usuario autenticado, volver al login
         Navigator.of(context).pushReplacement(
           CupertinoPageRoute(builder: (context) => const LoginScreen()),
         );
         return;
       }
 
-      // Actualizar display name en Auth
+      // Actualizar display name en Firebase Auth
       await user.updateDisplayName(_nameController.text.trim());
 
       // Subir imagen de perfil si existe
       String? profileImageUrl;
       if (_profileImage != null || _profileImageBytes != null) {
-        profileImageUrl = await _uploadProfileImage();
+        profileImageUrl = await _uploadProfileImage();  // Obtener URL de la imagen subida
       }
 
-      // Guardar en Firestore
+      // Guardar datos del perfil en Firestore (base de datos)
       final userRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid);
+          .collection('users')      // Colección de usuarios
+          .doc(user.uid);           // Documento con el UID del usuario
 
       await userRef.set({
         'phoneNumber': user.phoneNumber,

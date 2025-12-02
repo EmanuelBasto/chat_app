@@ -5,6 +5,9 @@ import 'package:chat_app/Screens/story_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Pantalla que muestra el perfil del usuario y la lista de contactos
+/// Incluye sección "My Status" con foto y estado del usuario
+/// Muestra "Recent Updates" (historias) y lista completa de contactos
 class PeopleScreen extends StatelessWidget {
   const PeopleScreen({Key? key}) : super(key: key);
 

@@ -7,10 +7,12 @@ import 'package:chat_app/Screens/profile_setup_screen.dart';
 import 'package:chat_app/Services/auth_service.dart';
 import 'package:chat_app/globla.dart';
 import 'package:chat_app/firebase_options.dart';
+import 'package:chat_app/config/supabase_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -19,6 +21,27 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  // Inicializar Supabase
+  try {
+    // Verificar que la anon key esté configurada
+    if (SupabaseConfig.supabaseAnonKey == 'TU_ANON_KEY_AQUI') {
+      print('⚠️ ADVERTENCIA: No has configurado tu anon key de Supabase');
+      print('⚠️ Ve a lib/config/supabase_config.dart y reemplaza "TU_ANON_KEY_AQUI" con tu anon key real');
+      print('⚠️ Puedes encontrarla en: Supabase Dashboard > Settings > API > anon/public key');
+    } else {
+      await Supabase.initialize(
+        url: SupabaseConfig.supabaseUrl,
+        anonKey: SupabaseConfig.supabaseAnonKey,
+      );
+      print('✅ Supabase inicializado correctamente');
+      print('✅ URL: ${SupabaseConfig.supabaseUrl}');
+      print('✅ Bucket: ${SupabaseConfig.photosBucket}');
+    }
+  } catch (e) {
+    print('❌ Error al inicializar Supabase: $e');
+    print('⚠️ Asegúrate de haber configurado TU_ANON_KEY en lib/config/supabase_config.dart');
+  }
   
   // Configurar emuladores para desarrollo
   if (kDebugMode) {

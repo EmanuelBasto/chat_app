@@ -7,9 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// Pantalla para ingresar el código SMS de verificación
+/// Tiene 6 campos individuales para cada dígito del código
+/// Verifica automáticamente cuando se completa el código
 class SmsCodeScreen extends StatefulWidget {
-  final String phoneNumber;
-  final String verificationId;
+  final String phoneNumber;      // Número de teléfono al que se envió el código
+  final String verificationId;   // ID de verificación de Firebase Auth
 
   const SmsCodeScreen({
     Key? key,
@@ -22,13 +25,15 @@ class SmsCodeScreen extends StatefulWidget {
 }
 
 class _SmsCodeScreenState extends State<SmsCodeScreen> {
+  // 6 controladores de texto, uno para cada dígito del código
   final List<TextEditingController> _codeControllers = List.generate(
     6,
     (index) => TextEditingController(),
   );
+  // 6 nodos de foco para navegar automáticamente entre campos
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-  final AuthService _authService = AuthService();
-  bool _isLoading = false;
+  final AuthService _authService = AuthService();  // Servicio de autenticación
+  bool _isLoading = false;  // Indica si se está verificando el código
 
   @override
   void dispose() {
@@ -41,19 +46,27 @@ class _SmsCodeScreenState extends State<SmsCodeScreen> {
     super.dispose();
   }
 
+  /// Se ejecuta cuando el usuario escribe un dígito
+  /// Mueve automáticamente el foco al siguiente campo
+  /// Verifica el código cuando todos los campos están llenos
   void _onCodeChanged(int index, String value) {
+    // Si hay un valor y no es el último campo, mover foco al siguiente
     if (value.isNotEmpty && index < 5) {
       _focusNodes[index + 1].requestFocus();
     }
 
-    // Verificar si todos los campos están llenos
+    // Verificar si todos los campos están llenos para verificar automáticamente
     bool allFilled = _codeControllers.every((controller) => controller.text.isNotEmpty);
     if (allFilled) {
-      _verifyCode();
+      _verifyCode();  // Verificar código automáticamente
     }
   }
 
+  /// Verifica el código SMS ingresado con Firebase Auth
+  /// Si es correcto, verifica si el usuario tiene perfil configurado
+  /// Navega a la pantalla principal o a configuración de perfil según corresponda
   Future<void> _verifyCode() async {
+    // Unir todos los dígitos en un solo código
     final code = _codeControllers.map((controller) => controller.text).join();
     if (code.length != 6) {
       return;

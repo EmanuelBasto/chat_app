@@ -3,6 +3,8 @@ import 'package:chat_app/globla.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Pantalla que muestra el historial de llamadas
+/// Muestra llamadas salientes, entrantes y perdidas con iconos y colores diferentes
 class CallsScreen extends StatelessWidget {
   const CallsScreen({Key? key}) : super(key: key);
 
@@ -52,25 +54,28 @@ class CallsScreen extends StatelessWidget {
                 delegate: SliverChildListDelegate(
                   calls.map(
                     (e) {
-                      // Determinar el icono según el tipo de llamada
+                      // Determinar el icono y color según el tipo de llamada
                       IconData callIcon;
                       Color iconColor;
                       String callTypeText;
                       
                       switch (e.callType.toLowerCase()) {
                         case 'outgoing':
+                          // Llamada saliente: flecha hacia arriba-derecha
                           callIcon = CupertinoIcons.phone_arrow_up_right;
                           iconColor = Colors.grey.shade600;
                           callTypeText = 'Outgoing';
                           break;
                         case 'incoming':
+                          // Llamada entrante: flecha hacia abajo-izquierda
                           callIcon = CupertinoIcons.phone_arrow_down_left;
                           iconColor = Colors.grey.shade600;
                           callTypeText = 'Incoming';
                           break;
                         case 'missed':
+                          // Llamada perdida: mismo icono que entrante pero en rojo
                           callIcon = CupertinoIcons.phone_arrow_down_left;
-                          iconColor = Colors.red;
+                          iconColor = Colors.red;  // Color rojo para llamadas perdidas
                           callTypeText = 'Missed';
                           break;
                         default:

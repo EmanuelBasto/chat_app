@@ -2,8 +2,11 @@ import 'package:chat_app/Models/people.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Pantalla para ver las historias (stories) de un contacto
+/// Permite navegar entre historias tocando la izquierda o derecha de la pantalla
+/// Muestra información del contacto y contador de historias
 class StoryScreen extends StatefulWidget {
-  final PeopleModel person;
+  final PeopleModel person;  // Contacto cuyas historias se van a mostrar
 
   const StoryScreen({
     Key? key,
@@ -15,17 +18,18 @@ class StoryScreen extends StatefulWidget {
 }
 
 class _StoryScreenState extends State<StoryScreen> {
-  late List<String> allStories;
-  late int currentIndex;
+  late List<String> allStories;  // Lista de todas las historias (imagen principal + historias adicionales)
+  late int currentIndex;         // Índice de la historia actual que se está mostrando
 
   @override
   void initState() {
     super.initState();
     // Combinar la imagen principal con las historias adicionales
     allStories = [widget.person.image, ...widget.person.stories];
-    currentIndex = 0;
+    currentIndex = 0;  // Empezar en la primera historia
   }
 
+  /// Avanza a la siguiente historia si existe
   void _nextStory() {
     if (currentIndex < allStories.length - 1) {
       setState(() {
@@ -34,6 +38,7 @@ class _StoryScreenState extends State<StoryScreen> {
     }
   }
 
+  /// Retrocede a la historia anterior si existe
   void _previousStory() {
     if (currentIndex > 0) {
       setState(() {
